@@ -231,5 +231,16 @@ def total_tags():
     }
     return data
 
+@app.route("/get_tags", methods = ["GET"])
+@login_required
+def get_tags():
+    conn = sqlite3.connect("items.db")
+    c = conn.cursor()
+    c.execute('''SELECT * FROM linen''')
+    tags = c.fetchall()
+    conn.commit()
+    conn.close()
+    return jsonify(tags)
+
 if __name__ == '__main__':
     app.run('0.0.0.0',port=9000)
