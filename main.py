@@ -7,7 +7,6 @@ from flask_login import LoginManager, current_user, login_required, login_user, 
 import sqlite3
 import bcrypt
 from user import User, Users
-from flask_cors import CORS
 import tags
 
 app = Flask(__name__)
