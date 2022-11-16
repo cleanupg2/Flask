@@ -156,8 +156,7 @@ def check_tags():
 @login_required
 def reg_tags():
     x = request.json
-    tag_id = x["tag_id"]
-    print(tag_id)
+    tag_list = x["tag_list"]
     aquisition_date = x["aquisition_date"]
     sub_category = x["category"]
     supplier = x["supplier"]
@@ -170,21 +169,30 @@ def reg_tags():
     else:
         category = "Cama"
     conn = sqlite3.connect("items.db")
-    c = conn.cursor()
-    c.execute('''INSERT INTO linen VALUES (:tag_id, :aquisition_date, :category, :sub_category, :supplier, :clean, :damage, :status, :staff_name)''',{
-        'tag_id': tag_id,
-        'aquisition_date': aquisition_date,
-        'category': category,
-        'sub_category': sub_category,
-        'supplier': supplier,
-        'clean': clean,
-        'damage': damage,
-        'status': status,
-        'staff_name': staff_name
-    })
-    conn.commit()
-    conn.close()
-    return "Registrado"
+    try:
+        c = conn.cursor()
+        for tag_id in tag_list:
+            c.execute('''INSERT INTO linen VALUES (:tag_id, :aquisition_date, :category, :sub_category, :supplier, :clean, :damage, :status, :staff_name)''',{
+                'tag_id': tag_id,
+                'aquisition_date': aquisition_date,
+                'category': category,
+                'sub_category': sub_category,
+                'supplier': supplier,
+                'clean': clean,
+                'damage': damage,
+                'status': status,
+                'staff_name': staff_name
+            })
+        conn.commit()
+        conn.close()
+        return {
+            "message": "Registrado"
+        }
+    except:
+        return {
+            "message": "Erro"
+        }
+        
 
 @app.route("/total_tags", methods = ["GET"])
 @login_required
