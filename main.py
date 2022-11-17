@@ -7,6 +7,7 @@ from flask_login import LoginManager, current_user, login_required, login_user, 
 import sqlite3
 import bcrypt
 from user import User, Users
+from datetime import date
 import tags
 
 app = Flask(__name__)
@@ -156,6 +157,8 @@ def check_tags():
 @login_required
 def reg_tags():
     x = request.json
+    today = date.today()
+    data = today.strftime("%d/%m/%Y")
     tag_list = x["tag_list"]
     aquisition_date = x["aquisition_date"]
     sub_category = x["category"]
@@ -182,6 +185,12 @@ def reg_tags():
                 'damage': damage,
                 'status': status,
                 'staff_name': staff_name
+            })
+            c.execute('''INSERT INTO log VALUES (:tag_id, :event_type, :date, :staff_name )''',{
+                "tag_id": tag_id,
+                "event_type": "Registro",
+                "date": data,
+                "staff_name": staff_name
             })
         conn.commit()
         conn.close()
@@ -249,6 +258,51 @@ def get_tags():
     conn.commit()
     conn.close()
     return jsonify(tags)
+
+@app.route("/get_log", methods=["GET"])
+@login_required
+def get_log():
+    conn = sqlite3.connect("items.db")
+    c = conn.cursor()
+    c.execute('''SELECT * FROM log''')
+    logs = c.fetchall()
+    conn.commit()
+    conn.close()
+    return jsonify(logs)
+
+@app.route("/change_tags", methods = ["POST"])
+@login_required
+def change_tags():
+    x = request.json
+    tag_id = x["tag"]
+    event = x["event"]
+    today = date.today()
+    staff_name = current_user.name
+    data = today.strftime("%d/%m/%Y")
+    conn = sqlite3.connect("items.db")
+    c = conn.cursor()
+    if event == "Limpa":
+        c.execute('''UPDATE linen SET clean = 1 WHERE (tag_id = ?)''', (tag_id,))     
+    elif event == "Suja":
+        c.execute('''UPDATE linen SET clean = 0 WHERE (tag_id = ?)''', (tag_id,))
+    elif event == "Ativa":
+        c.execute('''UPDATE linen SET status = 1 WHERE (tag_id = ?)''', (tag_id,))
+    elif event == "Inativa":
+        c.execute('''UPDATE linen SET status = 0 WHERE (tag_id = ?)''', (tag_id,))
+    elif event == "Danificada":
+        c.execute('''UPDATE linen SET damage = 1 WHERE (tag_id = ?)''', (tag_id,))
+    elif event == "Restaurada":
+        c.execute('''UPDATE linen SET damage = 0 WHERE (tag_id = ?)''', (tag_id,))
+    c.execute('''INSERT INTO log VALUES (:tag_id, :event_type, :date, :staff_name )''',{
+        "tag_id": tag_id,
+        "event_type": event,
+        "date": data,
+        "staff_name": staff_name
+    })
+    conn.commit()
+    conn.close()
+    return "OK"
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0',port=9000)
