@@ -44,3 +44,25 @@ Função com o objetivo de registar as tags:
 
 ![image](https://user-images.githubusercontent.com/111078608/202827832-8ee01e63-9dc2-448f-b31d-2c7ec0839bdb.png)
 
+## Total tags
+Função com o objetivo de retornar a quantidade de tags no geral e em cada categoria:
+
+![image](https://user-images.githubusercontent.com/111078608/202827949-0a64d7b1-d77d-486c-be4e-b49192484ff8.png)
+
+## Get Tags
+Funcao que retorna todas as tags do DB com o objetivo de preencher o inventário:
+
+![image](https://user-images.githubusercontent.com/111078608/202828034-bab14378-c56d-4727-a12e-e3578b691061.png)
+
+## Get Log
+Funcao que retornar o log de eventos:
+
+![image](https://user-images.githubusercontent.com/111078608/202828086-83f268a7-9518-4ffd-a452-cf8f8ae8d592.png)
+
+## Change Tags
+Funcao feita para alterar dados das tags:
+
+![image](https://user-images.githubusercontent.com/111078608/202828179-25a22c25-378b-4b1c-ac92-2e42cbad8f14.png)
+
+
+
