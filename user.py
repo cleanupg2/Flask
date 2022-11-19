@@ -2,7 +2,7 @@ from flask_login import UserMixin
 import sqlite3
 import bcrypt
 
-conn = sqlite3.connect("users.db")
+conn = sqlite3.connect("users.db")  #Criando o DB de usuarios e inicializando um usuario admin
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS user_data
 (user_id, pass_hash, name, email, auth, admin)''')
@@ -23,7 +23,7 @@ conn.commit()
 conn.close()
 
 
-class User(UserMixin):
+class User(UserMixin): # Classe de Usuario com suas devidas propriedades
     def __init__(self,admin,user_id,name,email,auth):
         self.admin=admin
         self.user_id=user_id
@@ -43,7 +43,7 @@ class User(UserMixin):
             "auth": self.auth
         }
 
-class Users():
+class Users(): # Classe que tem como funcao fazer a checagem de existencia do usuario, checar se a senha esta correta e por fim retornar o usuario com a mensagem de login.
     def get_user_for_login(user_id,password):
         conn = sqlite3.connect("users.db")
         c=conn.cursor()
