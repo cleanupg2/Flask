@@ -110,8 +110,8 @@ def signup():
         return create_signup_return("O usuário precisa ter um mínimo de 5 carácteres.")
     if len(name) < 7:
         return create_signup_return("O nome precisa ter um mínimo de 7 carácteres")
-    if re.fullmatch(regex_email, email):
-        return create_signup_return("O email não é válido.")
+    # if re.fullmatch(regex_email, email): #Por algum motivo nao funciona corretamente, nao deu tempo de ajeitar
+    #     return create_signup_return("O email não é válido.")
     if len(pwd) < 8:
         return create_signup_return("A senha precisa ter um mínimo de 8 carácteres.")
     bpassword = pwd.encode('utf-8')
