@@ -42,5 +42,5 @@ Funcao com o objetivo de enviar uma lista de tags e retornar as tags que estao r
 
 Função com o objetivo de registar as tags:
 
-<img width="1440" alt="image" src="https://user-images.githubusercontent.com/111078608/202827776-632794b4-fef5-4b80-b148-5607b5733cc3.png">
+![image](https://user-images.githubusercontent.com/111078608/202827832-8ee01e63-9dc2-448f-b31d-2c7ec0839bdb.png)
 
