@@ -9,6 +9,9 @@ c.execute('''CREATE TABLE IF NOT EXISTS log
 conn.commit()
 conn.close()
 
+#Classe nao utilizada, estava tentando fazer algo parecido que fiz com usuarios mas acabou nao sendo necessario
+#Nao apaguei para deixar registrado.
+
 class Tag():
     def __init__(self,tag_id,aquisition_date, type, supplier, clean, status,staff_name):
         self.tag_id = tag_id
@@ -32,6 +35,3 @@ class Tag():
             'status': self.status,
             'staff_name': self.staff_name
         }
-
-# Arthur = Tag(1234,'20/03/1965','Lençol','MMartin',0,'ativo','Arthur')
-# print(Arthur.to_dict())
